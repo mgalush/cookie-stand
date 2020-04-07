@@ -27,41 +27,66 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   //////////////////// SEATTLE LOCATION ///////////////////////
 
-  // data for Seattle location
-  let seattleLocation = {
-    minCustomers: 23,
-    maxCustomers: 65,
-    avgCookiesPerCustomer: 6.3,
-    customersPerHour: [],
-  };
+  function seattleLocationFunction() {
+    // data for Seattle location
+    let seattleLocation = {
+      minCustomers: 23,
+      maxCustomers: 65,
+      avgCookiesPerCustomer: 6.3,
+      customersPerHour: [],
+    };
 
-  // generate random number of customers based off locations minimum and maximum customers per hour
-  let calculateRandomNumberOfCustomers = function (min, max) {
-    return Math.random() * (max - min) + min;
-  };
-  // console.log(calculateRandomNumberOfCustomers(seattleLocation.minCustomers, seattleLocation.maxCustomers));
+    // generate random number of customers based off locations minimum and maximum customers per hour
+    let calculateRandomNumberOfCustomers = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
+    // console.log(calculateRandomNumberOfCustomers(seattleLocation.minCustomers, seattleLocation.maxCustomers));
 
-  // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
+    // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
 
-  let getCustomersPerHour;
-  for (var i = 0; i < storeHours.length; i++) {
-    getCustomersPerHour = Math.round(
-      calculateRandomNumberOfCustomers(
-        seattleLocation.minCustomers,
-        seattleLocation.maxCustomers
-      ) * seattleLocation.avgCookiesPerCustomer
-    );
+    let getCustomersPerHour;
+    for (var i = 0; i < storeHours.length; i++) {
+      getCustomersPerHour = Math.round(
+        calculateRandomNumberOfCustomers(
+          seattleLocation.minCustomers,
+          seattleLocation.maxCustomers
+        ) * seattleLocation.avgCookiesPerCustomer
+      );
 
-    // populate random customers per hour into customersPerHour array
-    seattleLocation.customersPerHour.push(getCustomersPerHour);
-    // console.log(getCustomersPerHour);
+      // populate random customers per hour into customersPerHour array
+      seattleLocation.customersPerHour.push(getCustomersPerHour);
+      // console.log(getCustomersPerHour);
 
-    //////// insert new element into DOM using DOM manipulation
+      //////// insert new element into DOM using DOM manipulation
+      // find target and save in variable
+      let targetOne = document.getElementById('seattle-list');
+      // create textnode
+      let textnode = document.createTextNode(
+        storeHours[i] + ': ' + getCustomersPerHour + ' cookies'
+      );
+      // create new element
+      let newElementLi = document.createElement('li');
+      // append text node to element
+      newElementLi.appendChild(textnode);
+      // append element to li
+      targetOne.appendChild(newElementLi);
+    }
+
+    // find total number of sales usning reduce method
+    let totalSalesPerDay = seattleLocation.customersPerHour.reduce(function (
+      a,
+      b
+    ) {
+      return a + b;
+    },
+    0);
+
+    // append total to li in DOM
     // find target and save in variable
     let targetOne = document.getElementById('seattle-list');
     // create textnode
     let textnode = document.createTextNode(
-      storeHours[i] + ': ' + getCustomersPerHour + ' cookies'
+      'Total: ' + totalSalesPerDay + ' cookies'
     );
     // create new element
     let newElementLi = document.createElement('li');
@@ -70,29 +95,79 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // append element to li
     targetOne.appendChild(newElementLi);
   }
+  seattleLocationFunction();
 
-  // find total number of sales usning reduce method
-  let totalSalesPerDay = seattleLocation.customersPerHour.reduce(function (
-    a,
-    b
-  ) {
-    return a + b;
-  },
-  0);
+  //////////////////// TOKYO LOCATION ///////////////////////
 
-  // append total to li in DOM
-  // find target and save in variable
-  let targetOne = document.getElementById('seattle-list');
-  // create textnode
-  let textnode = document.createTextNode(
-    'Total: ' + totalSalesPerDay + ' cookies'
-  );
-  // create new element
-  let newElementLi = document.createElement('li');
-  // append text node to element
-  newElementLi.appendChild(textnode);
-  // append element to li
-  targetOne.appendChild(newElementLi);
+  function tokyoLocationFunction() {
+    // data for Tokyo location
+    let tokyoLocation = {
+      minCustomers: 23,
+      maxCustomers: 65,
+      avgCookiesPerCustomer: 6.3,
+      customersPerHour: [],
+    };
+
+    // generate random number of customers based off locations minimum and maximum customers per hour
+    let calculateRandomNumberOfCustomers = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
+    // console.log(calculateRandomNumberOfCustomers(tokyoLocation.minCustomers, tokyoLocation.maxCustomers));
+
+    // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
+
+    let getCustomersPerHour;
+    for (var i = 0; i < storeHours.length; i++) {
+      getCustomersPerHour = Math.round(
+        calculateRandomNumberOfCustomers(
+          tokyoLocation.maxCustomers,
+          tokyoLocation.minCustomers
+        ) * tokyoLocation.avgCookiesPerCustomer
+      );
+
+      // populate random customers per hour into customersPerHour array
+      tokyoLocation.customersPerHour.push(getCustomersPerHour);
+      // console.log(getCustomersPerHour);
+
+      //////// insert new element into DOM using DOM manipulation
+      // find target and save in variable
+      let targetOne = document.getElementById('tokyo-list');
+      // create textnode
+      let textnode = document.createTextNode(
+        storeHours[i] + ': ' + getCustomersPerHour + ' cookies'
+      );
+      // create new element
+      let newElementLi = document.createElement('li');
+      // append text node to element
+      newElementLi.appendChild(textnode);
+      // append element to li
+      targetOne.appendChild(newElementLi);
+    }
+
+    // find total number of sales usning reduce method
+    let totalSalesPerDay = tokyoLocation.customersPerHour.reduce(function (
+      a,
+      b
+    ) {
+      return a + b;
+    },
+    0);
+
+    // append total to li in DOM
+    // find target and save in variable
+    let targetOne = document.getElementById('tokyo-list');
+    // create textnode
+    let textnode = document.createTextNode(
+      'Total: ' + totalSalesPerDay + ' cookies'
+    );
+    // create new element
+    let newElementLi = document.createElement('li');
+    // append text node to element
+    newElementLi.appendChild(textnode);
+    // append element to li
+    targetOne.appendChild(newElementLi);
+  }
+  tokyoLocationFunction();
 
   //////////////// note to self: just keep swimming //////////////
   if (Math.random() < 0.1) {
