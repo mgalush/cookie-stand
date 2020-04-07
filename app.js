@@ -102,9 +102,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   function tokyoLocationFunction() {
     // data for Tokyo location
     let tokyoLocation = {
-      minCustomers: 23,
-      maxCustomers: 65,
-      avgCookiesPerCustomer: 6.3,
+      minCustomers: 3,
+      maxCustomers: 24,
+      avgCookiesPerCustomer: 1.2,
       customersPerHour: [],
     };
 
