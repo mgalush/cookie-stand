@@ -313,6 +313,78 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
   parisLocationFunction();
 
+    //////////////////// LIMA LOCATION ///////////////////////
+
+    function limaLocationFunction() {
+      // data for lima location
+      let limaLocation = {
+        minCustomers: 20,
+        maxCustomers: 38,
+        avgCookiesPerCustomer: 2.3,
+        customersPerHour: [],
+      };
+  
+      // generate random number of customers based off locations minimum and maximum customers per hour
+      let calculateRandomNumberOfCustomers = function (min, max) {
+        return Math.random() * (max - min) + min;
+      };
+      // console.log(calculateRandomNumberOfCustomers(dubaiLocation.minCustomers, parisLocation.maxCustomers));
+  
+      // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
+  
+      let getCustomersPerHour;
+      for (var i = 0; i < storeHours.length; i++) {
+        getCustomersPerHour = Math.round(
+          calculateRandomNumberOfCustomers(
+            limaLocation.maxCustomers,
+            limaLocation.minCustomers
+          ) * limaLocation.avgCookiesPerCustomer
+        );
+  
+        // populate random customers per hour into customersPerHour array
+        limaLocation.customersPerHour.push(getCustomersPerHour);
+        // console.log(getCustomersPerHour);
+  
+        //////// insert new element into DOM using DOM manipulation
+        // find target and save in variable
+        let targetOne = document.getElementById('lima-list');
+        // create textnode
+        let textnode = document.createTextNode(
+          storeHours[i] + ': ' + getCustomersPerHour + ' cookies'
+        );
+        // create new element
+        let newElementLi = document.createElement('li');
+        // append text node to element
+        newElementLi.appendChild(textnode);
+        // append element to li
+        targetOne.appendChild(newElementLi);
+      }
+  
+      // find total number of sales usning reduce method
+      let totalSalesPerDay = limaLocation.customersPerHour.reduce(function (
+        a,
+        b
+      ) {
+        return a + b;
+      },
+      0);
+  
+      // append total to li in DOM
+      // find target and save in variable
+      let targetOne = document.getElementById('lima-list');
+      // create textnode
+      let textnode = document.createTextNode(
+        'Total: ' + totalSalesPerDay + ' cookies'
+      );
+      // create new element
+      let newElementLi = document.createElement('li');
+      // append text node to element
+      newElementLi.appendChild(textnode);
+      // append element to li
+      targetOne.appendChild(newElementLi);
+    }
+    limaLocationFunction();
+
   //////////////// note to self: just keep swimming //////////////
   if (Math.random() < 0.1) {
     alert('JUSTIN LOVES YOU');
