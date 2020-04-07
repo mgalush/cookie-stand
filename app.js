@@ -169,6 +169,78 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
   tokyoLocationFunction();
 
+  //////////////////// DUBAI LOCATION ///////////////////////
+
+  function dubaiLocationFunction() {
+    // data for Dubai location
+    let dubaiLocation = {
+      minCustomers: 11,
+      maxCustomers: 38,
+      avgCookiesPerCustomer: 3.7,
+      customersPerHour: [],
+    };
+
+    // generate random number of customers based off locations minimum and maximum customers per hour
+    let calculateRandomNumberOfCustomers = function (min, max) {
+      return Math.random() * (max - min) + min;
+    };
+    // console.log(calculateRandomNumberOfCustomers(dubaiLocation.minCustomers, dubaiLocation.maxCustomers));
+
+    // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
+
+    let getCustomersPerHour;
+    for (var i = 0; i < storeHours.length; i++) {
+      getCustomersPerHour = Math.round(
+        calculateRandomNumberOfCustomers(
+          dubaiLocation.maxCustomers,
+          dubaiLocation.minCustomers
+        ) * dubaiLocation.avgCookiesPerCustomer
+      );
+
+      // populate random customers per hour into customersPerHour array
+      dubaiLocation.customersPerHour.push(getCustomersPerHour);
+      // console.log(getCustomersPerHour);
+
+      //////// insert new element into DOM using DOM manipulation
+      // find target and save in variable
+      let targetOne = document.getElementById('dubai-list');
+      // create textnode
+      let textnode = document.createTextNode(
+        storeHours[i] + ': ' + getCustomersPerHour + ' cookies'
+      );
+      // create new element
+      let newElementLi = document.createElement('li');
+      // append text node to element
+      newElementLi.appendChild(textnode);
+      // append element to li
+      targetOne.appendChild(newElementLi);
+    }
+
+    // find total number of sales usning reduce method
+    let totalSalesPerDay = dubaiLocation.customersPerHour.reduce(function (
+      a,
+      b
+    ) {
+      return a + b;
+    },
+    0);
+
+    // append total to li in DOM
+    // find target and save in variable
+    let targetOne = document.getElementById('dubai-list');
+    // create textnode
+    let textnode = document.createTextNode(
+      'Total: ' + totalSalesPerDay + ' cookies'
+    );
+    // create new element
+    let newElementLi = document.createElement('li');
+    // append text node to element
+    newElementLi.appendChild(textnode);
+    // append element to li
+    targetOne.appendChild(newElementLi);
+  }
+  dubaiLocationFunction();
+
   //////////////// note to self: just keep swimming //////////////
   if (Math.random() < 0.1) {
     alert('JUSTIN LOVES YOU');
