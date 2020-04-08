@@ -37,6 +37,15 @@ window.addEventListener('DOMContentLoaded', () => {
       // append element to table row
       headerTarget.appendChild(tableHeader);
     }
+    // create total number of daily sales per location
+    // create text node
+    let dailyLocationText = document.createTextNode('Daily Location Total');
+    // create table data
+    let totalSalesHeader = document.createElement('th');
+    //append text to table data
+    totalSalesHeader.appendChild(dailyLocationText);
+    // append location to row
+    headerTarget.appendChild(totalSalesHeader);
   };
 
   function Location(
@@ -88,7 +97,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //// fill table body with data
 
-    // create text node 
+    // create text node
     let locationDataText = document.createTextNode(this.location);
     // create table data
     let newLocation = document.createElement('td');
@@ -98,7 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
     newTableRow.appendChild(newLocation);
 
     // render cookie sale data in table
-    for ( const cookiesSold of this.cookiesSoldPerHour ) {
+    for (const cookiesSold of this.cookiesSoldPerHour) {
       // create text node
       let tableDataText = document.createTextNode(cookiesSold);
       // create table data
@@ -108,6 +117,16 @@ window.addEventListener('DOMContentLoaded', () => {
       // append text node to element
       newTableRow.appendChild(newTableData);
     }
+    // put total number of sales in table
+    // create text node
+    let totalSalesText = document.createTextNode(this.totalSalesPerDay);
+    // create table data
+    let totalSalesLocation = document.createElement('td');
+    //append text to table data
+    totalSalesLocation.appendChild(totalSalesText);
+    // append location to row
+    newTableRow.appendChild(totalSalesLocation);
+
     // append table row to table body
     bodyTarget.appendChild(newTableRow);
   };
