@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log('app.js is linked');
 
   // create variable for store hours
-  let storeHours = [
+  const storeHours = [
     '6am',
     '7am',
     '8am',
@@ -22,6 +22,22 @@ window.addEventListener('DOMContentLoaded', () => {
     '6pm',
     '7pm',
   ];
+
+  // generate table header using storeHours array
+  const renderTableHeader = function () {
+    // find target and save in variable
+    let headerTarget = document.getElementById('header-row');
+    for (const storeHour of storeHours) {
+      // create textnode
+      let headerText = document.createTextNode(storeHour);
+      // create new element
+      let tableHeader = document.createElement('th');
+      // append text node to element
+      tableHeader.appendChild(headerText);
+      // append element to table row
+      headerTarget.appendChild(tableHeader);
+    }
+  };
 
   function Location(
     location,
@@ -64,43 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   Location.prototype.renderLocation = function () {
-    for (var i = 0; i < storeHours.length; i++) {
-      //////// insert new element into DOM using DOM manipulation
-      // find target and save in variable
-      let targetOne = document.getElementById(this.listId);
-      // create textnode
-      let textnode = document.createTextNode(
-        storeHours[i] + ': ' + this.customersPerHour[i] + ' cookies'
-      );
-      // create new element
-      let newElementLi = document.createElement('li');
-      // append text node to element
-      newElementLi.appendChild(textnode);
-      // append element to li
-      targetOne.appendChild(newElementLi);
-    }
-
-    // append total to li in DOM
-    // find target and save in variable
-    let listTarget = document.getElementById(this.listId);
-    // create textnode
-    let listText = document.createTextNode(
-      'Total: ' + this.totalSalesPerDay + ' cookies'
-    );
-    // create new element
-    let newElementLi = document.createElement('li');
-    // append text node to element
-    newElementLi.appendChild(listText);
-    // append element to li
-    listTarget.appendChild(newElementLi);
-
-
-    //create header for each(this) location
-    let headerTarget = document.getElementById(this.headerId);
-    //create textnode
-    let headerText = document.createTextNode(this.location);
-    //append element to h3
-    headerTarget.appendChild(headerText);
+    for (var i = 0; i < storeHours.length; i++) {}
   };
 
   // create object for each location
@@ -112,6 +92,9 @@ window.addEventListener('DOMContentLoaded', () => {
     new Location('Lima', 2, 16, 4.6, 'lima-list', 'lima-header'),
   ];
 
+  renderTableHeader();
+
+  // call both functions for each location
   for (const location of locations) {
     location.calculateLocation();
     location.renderLocation();
