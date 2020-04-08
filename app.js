@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
     this.minCustomers = minCustomers;
     this.maxCustomers = maxCustomers;
     this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-    this.customersPerHour = [];
+    this.cookiesSoldPerHour = [];
     this.listId = listId;
     this.totalSalesPerDay = 0;
     this.headerId = headerId;
@@ -59,28 +59,57 @@ window.addEventListener('DOMContentLoaded', () => {
 
   Location.prototype.calculateLocation = function () {
     // generate random number of customers based off locations minimum and maximum customers per hour
-    let calculateRandomNumberOfCustomers = function (min, max) {
+    let calculateCookiesSoldPerHour = function (min, max) {
       return Math.random() * (max - min) + min;
     };
 
     // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
-    let getCustomersPerHour;
+    let getCookiesSoldPerHour;
     for (var i = 0; i < storeHours.length; i++) {
-      getCustomersPerHour = Math.round(
-        calculateRandomNumberOfCustomers(this.minCustomers, this.maxCustomers) *
+      getCookiesSoldPerHour = Math.round(
+        calculateCookiesSoldPerHour(this.minCustomers, this.maxCustomers) *
           this.avgCookiesPerCustomer
       );
       // populate random customers per hour into customersPerHour array
-      this.customersPerHour.push(getCustomersPerHour);
+      this.cookiesSoldPerHour.push(getCookiesSoldPerHour);
     }
     // find total number of sales using reduce method
-    this.totalSalesPerDay = this.customersPerHour.reduce(function (a, b) {
+    this.totalSalesPerDay = this.cookiesSoldPerHour.reduce(function (a, b) {
       return a + b;
     }, 0);
   };
 
   Location.prototype.renderLocation = function () {
-    for (var i = 0; i < storeHours.length; i++) {}
+    //// create table body
+    // find target and save in variable
+    let bodyTarget = document.getElementById('table-body');
+    // create table row
+    let newTableRow = document.createElement('tr');
+
+    //// fill table body with data
+
+    // create text node 
+    let locationDataText = document.createTextNode(this.location);
+    // create table data
+    let newLocation = document.createElement('td');
+    //append text to table data
+    newLocation.appendChild(locationDataText);
+    // append location to row
+    newTableRow.appendChild(newLocation);
+
+    // render cookie sale data in table
+    for ( const cookiesSold of this.cookiesSoldPerHour ) {
+      // create text node
+      let tableDataText = document.createTextNode(cookiesSold);
+      // create table data
+      let newTableData = document.createElement('td');
+      // append text to table data
+      newTableData.appendChild(tableDataText);
+      // append text node to element
+      newTableRow.appendChild(newTableData);
+    }
+    // append table row to table body
+    bodyTarget.appendChild(newTableRow);
   };
 
   // create object for each location
