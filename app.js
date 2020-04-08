@@ -28,7 +28,8 @@ window.addEventListener('DOMContentLoaded', () => {
     minCustomers,
     maxCustomers,
     avgCookiesPerCustomer,
-    listId
+    listId,
+    headerId
   ) {
     this.location = location;
     this.minCustomers = minCustomers;
@@ -37,6 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
     this.customersPerHour = [];
     this.listId = listId;
     this.totalSalesPerDay = 0;
+    this.headerId = headerId;
   }
 
   Location.prototype.calculateLocation = function () {
@@ -80,26 +82,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // append total to li in DOM
     // find target and save in variable
-    let targetOne = document.getElementById(this.listId);
+    let listTarget = document.getElementById(this.listId);
     // create textnode
-    let textnode = document.createTextNode(
+    let listText = document.createTextNode(
       'Total: ' + this.totalSalesPerDay + ' cookies'
     );
     // create new element
     let newElementLi = document.createElement('li');
     // append text node to element
-    newElementLi.appendChild(textnode);
+    newElementLi.appendChild(listText);
     // append element to li
-    targetOne.appendChild(newElementLi);
+    listTarget.appendChild(newElementLi);
+
+
+    //create header for each(this) location
+    let headerTarget = document.getElementById(this.headerId);
+    //create textnode
+    let headerText = document.createTextNode(this.location);
+    //append element to h3
+    headerTarget.appendChild(headerText);
   };
 
   // create object for each location
   const locations = [
-    new Location('Seattle', 23, 65, 6.3, 'seattle-list'),
-    new Location('Tokyo', 3, 24, 1.2, 'tokyo-list'),
-    new Location('Dubai', 11, 38, 3.7, 'dubai-list'),
-    new Location('Paris', 20, 38, 2.3, 'paris-list'),
-    new Location('Lima', 2, 16, 4.6, 'lima-list'),
+    new Location('Seattle', 23, 65, 6.3, 'seattle-list', 'seattle-header'),
+    new Location('Tokyo', 3, 24, 1.2, 'tokyo-list', 'tokyo-header'),
+    new Location('Dubai', 11, 38, 3.7, 'dubai-list', 'dubai-header'),
+    new Location('Paris', 20, 38, 2.3, 'paris-list', 'paris-header'),
+    new Location('Lima', 2, 16, 4.6, 'lima-list', 'lima-header'),
   ];
 
   for (const location of locations) {
