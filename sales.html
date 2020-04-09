@@ -12,6 +12,18 @@
     <h1>Salmon Cookies Sales</h1>
   </header>
   <main>
+    <form id="new-location-form">
+      <fieldset>
+        <legend>Add New Location</legend>
+        <label for="location">Location</label>
+        <input id="location" type="text" name="location">
+        <label for="minCust">Minimum Customers Per Hour</label>
+        <input id="minCust" type="number" name="minCust">
+        <label for="maxCust">Maximum Customers Per Hour</label>
+        <input id="maxCust" type="number" name="maxCust">
+        <button class="submit" type="submit" value="submit">Add New Location</button>
+      </fieldset>
+    </form>
     <table id="cookie-sales-table">
       <thead>
         <tr id="header-row">
