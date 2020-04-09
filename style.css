@@ -99,6 +99,10 @@ form {
   margin-bottom: 20px;
 }
 
+legend {
+  font-weight: bold;
+}
+
 button.submit {
   background-color: #a34002;
   border-radius: 5px;
