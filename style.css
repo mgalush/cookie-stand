@@ -90,3 +90,29 @@ footer {
 .locations > li {
   padding: 20px;
 }
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+th {
+  height: 50px;
+  width: 50px;
+}
+
+th:last-child {
+  width: 100px;
+}
+
+tr:not(:first-child):hover {
+  background-color: #a34002;
+}
+
+td:first-child {
+  font-weight: bold;
+}
