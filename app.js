@@ -59,18 +59,14 @@ window.addEventListener('DOMContentLoaded', () => {
     location,
     minCustomers,
     maxCustomers,
-    avgCookiesPerCustomer,
-    listId,
-    headerId
+    avgCookiesPerCustomer
   ) {
     this.location = location;
     this.minCustomers = minCustomers;
     this.maxCustomers = maxCustomers;
     this.avgCookiesPerCustomer = avgCookiesPerCustomer;
     this.cookiesSoldPerHour = [];
-    this.listId = listId;
     this.totalSalesPerDay = 0;
-    this.headerId = headerId;
   }
 
   Location.prototype.calculateLocation = function () {
@@ -98,24 +94,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // create object for each location
   const locations = [
-    new Location('Seattle', 23, 65, 6.3, 'seattle-list', 'seattle-header'),
-    new Location('Tokyo', 3, 24, 1.2, 'tokyo-list', 'tokyo-header'),
-    new Location('Dubai', 11, 38, 3.7, 'dubai-list', 'dubai-header'),
-    new Location('Paris', 20, 38, 2.3, 'paris-list', 'paris-header'),
-    new Location('Lima', 2, 16, 4.6, 'lima-list', 'lima-header'),
+    new Location('Seattle', 23, 65, 6.3),
+    new Location('Tokyo', 3, 24, 1.2),
+    new Location('Dubai', 11, 38, 3.7),
+    new Location('Paris', 20, 38, 2.3),
+    new Location('Lima', 2, 16, 4.6),
   ];
 
   const cookieSalesTable = new Table('cookie-sales-table');
 
   cookieSalesTable.renderHeader(['', ...storeHours, 'Daily Location Total']);
 
+  const hourlyTotals = new Array(storeHours.length + 1).fill(0);
   // call both functions for each location
-  for (const location of locations) {
+  for (let location of locations) {
     location.calculateLocation();
     cookieSalesTable.renderRow([
       location.location,
       ...location.cookiesSoldPerHour,
       location.totalSalesPerDay,
     ]);
+    for (let i in location.cookiesSoldPerHour) {
+      const cookiesPerHour = location.cookiesSoldPerHour[i];
+      hourlyTotals[i] += cookiesPerHour;
+    }
+    hourlyTotals[hourlyTotals.length - 1] += location.totalSalesPerDay;
   }
+
+  cookieSalesTable.renderRow(['Total', ...hourlyTotals]);
 });
