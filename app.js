@@ -71,7 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   Location.prototype.calculateLocation = function () {
     // calculate random number of cookies sold
-    let calculateCookiesSoldPerHour = function (min, max) {
+    let randomNumber = function (min, max) {
       return Math.random() * (max - min) + min;
     };
 
@@ -79,7 +79,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let getCookiesSoldPerHour;
     for (var i = 0; i < storeHours.length; i++) {
       getCookiesSoldPerHour = Math.round(
-        calculateCookiesSoldPerHour(this.minCustomers, this.maxCustomers) *
+        randomNumber(this.minCustomers, this.maxCustomers) *
           this.avgCookiesPerCustomer
       );
       // populate cookies per hour into cookiesSoldPerHour array
