@@ -103,9 +103,15 @@ legend {
   font-weight: bold;
 }
 
+input {
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
 button.submit {
   background-color: #a34002;
   border-radius: 5px;
+  padding: 5px;
 }
 
 fieldset {
