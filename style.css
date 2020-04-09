@@ -1,3 +1,5 @@
+/* styles for index.html */
+
 header {
   min-height: 100px;
   margin-bottom: 10px;
@@ -89,4 +91,46 @@ footer {
 
 .locations > li {
   padding: 20px;
+}
+
+/* styles for sales.html*/
+
+form {
+  margin-bottom: 20px;
+}
+
+button.submit {
+  background-color: #a34002;
+  border-radius: 5px;
+}
+
+fieldset {
+  margin: 0 auto;
+  width: 80%;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+th {
+  height: 50px;
+  width: 50px;
+}
+
+th:last-child {
+  width: 100px;
+}
+
+tr:not(:first-child):hover {
+  background-color: #a34002;
+}
+
+td:first-child {
+  font-weight: bold;
 }
