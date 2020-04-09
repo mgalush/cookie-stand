@@ -3,8 +3,6 @@
 window.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded and parsed');
 
-  console.log('app.js is linked');
-
   // create variable for store hours
   const storeHours = [
     '6am',
@@ -23,29 +21,38 @@ window.addEventListener('DOMContentLoaded', () => {
     '7pm',
   ];
 
-  // generate table header using storeHours array
-  const renderTableHeader = function () {
-    // find target and save in variable
-    let headerTarget = document.getElementById('header-row');
-    for (const storeHour of storeHours) {
+  function Table(tableId) {
+    this.table = document.getElementById(tableId);
+    this.header = this.table.querySelector('thead');
+    this.body = this.table.querySelector('tbody');
+  }
+  // create table header
+  Table.prototype.renderHeader = function (dataArray) {
+    this.renderRowOfType('th', this.header, dataArray);
+  };
+
+  // create table body
+  Table.prototype.renderRow = function (dataArray) {
+    this.renderRowOfType('td', this.body, dataArray);
+  };
+
+  Table.prototype.renderRowOfType = function (type, target, dataArray) {
+    // create table row
+    let newTableRow = document.createElement('tr');
+
+    for (const data of dataArray) {
       // create textnode
-      let headerText = document.createTextNode(storeHour);
+      let text = document.createTextNode(data);
       // create new element
-      let tableHeader = document.createElement('th');
+      let element = document.createElement(type);
       // append text node to element
-      tableHeader.appendChild(headerText);
+      element.appendChild(text);
       // append element to table row
-      headerTarget.appendChild(tableHeader);
+      newTableRow.appendChild(element);
     }
-    // create total number of daily sales per location
-    // create text node
-    let dailyLocationText = document.createTextNode('Daily Location Total');
-    // create table data
-    let totalSalesHeader = document.createElement('th');
-    //append text to table data
-    totalSalesHeader.appendChild(dailyLocationText);
-    // append location to row
-    headerTarget.appendChild(totalSalesHeader);
+
+    // append table row to table body
+    target.appendChild(newTableRow);
   };
 
   function Location(
@@ -72,63 +79,21 @@ window.addEventListener('DOMContentLoaded', () => {
       return Math.random() * (max - min) + min;
     };
 
-    // calculate the amounts of cookies purchased for each hour and store in a variable (getCustomersPerHour)
+    // calculate the amounts of cookies purchased for each hour and store in a variable (getCookiesSoldPerHour)
     let getCookiesSoldPerHour;
     for (var i = 0; i < storeHours.length; i++) {
       getCookiesSoldPerHour = Math.round(
         calculateCookiesSoldPerHour(this.minCustomers, this.maxCustomers) *
           this.avgCookiesPerCustomer
       );
-      // populate random customers per hour into customersPerHour array
+      // populate random customers per hour into cookiesSoldPerHour array
       this.cookiesSoldPerHour.push(getCookiesSoldPerHour);
     }
-    // find total number of sales using reduce method
+
+    // find total sales per store using reduce method
     this.totalSalesPerDay = this.cookiesSoldPerHour.reduce(function (a, b) {
       return a + b;
     }, 0);
-  };
-
-  Location.prototype.renderLocation = function () {
-    //// create table body
-    // find target and save in variable
-    let bodyTarget = document.getElementById('table-body');
-    // create table row
-    let newTableRow = document.createElement('tr');
-
-    //// fill table body with data
-
-    // create text node
-    let locationDataText = document.createTextNode(this.location);
-    // create table data
-    let newLocation = document.createElement('td');
-    //append text to table data
-    newLocation.appendChild(locationDataText);
-    // append location to row
-    newTableRow.appendChild(newLocation);
-
-    // render cookie sale data in table
-    for (const cookiesSold of this.cookiesSoldPerHour) {
-      // create text node
-      let tableDataText = document.createTextNode(cookiesSold);
-      // create table data
-      let newTableData = document.createElement('td');
-      // append text to table data
-      newTableData.appendChild(tableDataText);
-      // append text node to element
-      newTableRow.appendChild(newTableData);
-    }
-    // put total number of sales in table
-    // create text node
-    let totalSalesText = document.createTextNode(this.totalSalesPerDay);
-    // create table data
-    let totalSalesLocation = document.createElement('td');
-    //append text to table data
-    totalSalesLocation.appendChild(totalSalesText);
-    // append location to row
-    newTableRow.appendChild(totalSalesLocation);
-
-    // append table row to table body
-    bodyTarget.appendChild(newTableRow);
   };
 
   // create object for each location
@@ -140,11 +105,17 @@ window.addEventListener('DOMContentLoaded', () => {
     new Location('Lima', 2, 16, 4.6, 'lima-list', 'lima-header'),
   ];
 
-  renderTableHeader();
+  const cookieSalesTable = new Table('cookie-sales-table');
+
+  cookieSalesTable.renderHeader(['', ...storeHours, 'Daily Location Total']);
 
   // call both functions for each location
   for (const location of locations) {
     location.calculateLocation();
-    location.renderLocation();
+    cookieSalesTable.renderRow([
+      location.location,
+      ...location.cookiesSoldPerHour,
+      location.totalSalesPerDay,
+    ]);
   }
 });
