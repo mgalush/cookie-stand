@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
       // append element to table row
       newTableRow.appendChild(element);
     }
-
     // append table row to table body
     target.appendChild(newTableRow);
   };
@@ -69,12 +68,12 @@ window.addEventListener('DOMContentLoaded', () => {
     this.totalSalesPerDay = 0;
   }
 
-  Location.prototype.calculateLocation = function () {
-    // calculate random number of cookies sold
-    let randomNumber = function (min, max) {
-      return Math.random() * (max - min) + min;
-    };
+  // calculate random number of cookies sold
+  let randomNumber = function (min, max) {
+    return Math.random() * (max - min) + min;
+  };
 
+  Location.prototype.calculateLocation = function () {
     // calculate amount of cookies purchased for each hour and store in a variable (getCookiesSoldPerHour)
     let getCookiesSoldPerHour;
     for (var i = 0; i < storeHours.length; i++) {
@@ -85,7 +84,6 @@ window.addEventListener('DOMContentLoaded', () => {
       // populate cookies per hour into cookiesSoldPerHour array
       this.cookiesSoldPerHour.push(getCookiesSoldPerHour);
     }
-
     // find total sales per store using reduce method
     this.totalSalesPerDay = this.cookiesSoldPerHour.reduce(function (a, b) {
       return a + b;
