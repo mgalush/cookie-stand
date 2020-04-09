@@ -70,19 +70,19 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   Location.prototype.calculateLocation = function () {
-    // generate random number of customers based off locations minimum and maximum customers per hour
+    // calculate random number of cookies sold
     let calculateCookiesSoldPerHour = function (min, max) {
       return Math.random() * (max - min) + min;
     };
 
-    // calculate the amounts of cookies purchased for each hour and store in a variable (getCookiesSoldPerHour)
+    // calculate amount of cookies purchased for each hour and store in a variable (getCookiesSoldPerHour)
     let getCookiesSoldPerHour;
     for (var i = 0; i < storeHours.length; i++) {
       getCookiesSoldPerHour = Math.round(
         calculateCookiesSoldPerHour(this.minCustomers, this.maxCustomers) *
           this.avgCookiesPerCustomer
       );
-      // populate random customers per hour into cookiesSoldPerHour array
+      // populate cookies per hour into cookiesSoldPerHour array
       this.cookiesSoldPerHour.push(getCookiesSoldPerHour);
     }
 
