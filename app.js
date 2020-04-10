@@ -122,4 +122,35 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   cookieSalesTable.renderRow(['Total', ...hourlyTotals]);
+
+
+
+  ///////////////////// FORM ////////////////////////////////
+
+  // find target
+  let newLocationForm = document.getElementById('newLocationForm');
+
+  // add event listener
+  newLocationForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    this.location = event.target.newLocation.value;
+    this.minCust = event.target.newMinCust.value;
+    this.maxCust = event.target.newMaxCust.value;
+    this.avgCookiesPerCustomer = event.target.newAvgCookiesPerCustomer.value;
+
+    let location = new Location(this.location, this.minCust, this.maxCust, this.avgCookiesPerCustomer);
+    locations.push(location);
+
+    // create new row 
+    location.calculateLocation();
+    cookieSalesTable.renderRow([
+      location.location,
+      ...location.cookiesSoldPerHour,
+      location.totalSalesPerDay,
+    ]);
+
+  });
+
+
 });
