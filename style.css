@@ -95,6 +95,9 @@ footer {
 
 /* styles for sales.html*/
 
+.home {
+  text-decoration: none;
+}
 form {
   margin-bottom: 20px;
 }
