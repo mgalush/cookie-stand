@@ -16,14 +16,14 @@
       <fieldset>
         <legend>Add New Location</legend>
         <label for="newLocation">Location</label>
-        <input id="newLocation" type="text" name="newLocation">
+        <input id="newLocation" type="text" name="newLocation" required>
         <label for="newMinCust">Minimum Customers Per Hour</label>
-        <input id="newMinCust" type="number" name="newMinCust">
+        <input id="newMinCust" type="number" name="newMinCust" min="0" required>
         <label for="newMaxCust">Maximum Customers Per Hour</label>
-        <input id="newMaxCust" type="number" name="newMaxCust">
+        <input id="newMaxCust" type="number" name="newMaxCust" min="0" required>
         <br>
         <label for="newAvgCookiesPerCustomer">Average Cookies Per Customer</label>
-        <input id="newAvgCookiesPerCustomer" type="number" name="newAvgCookiesPerCustomer">
+        <input id="newAvgCookiesPerCustomer" type="number" name="newAvgCookiesPerCustomer" min="0" required>
         <button class="submit" type="submit" value="submit">Add New Location</button>
       </fieldset>
     </form>
