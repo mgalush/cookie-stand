@@ -1,5 +1,14 @@
-/* styles for index.html */
+html {
+  background-color: #a34002;
+  font-family: 'Times New Roman', Times, serif;
+}
 
+::selection {
+  color: #a34002;
+  background-color: white;
+}
+
+/* styles for index.html */
 header {
   min-height: 100px;
   margin-bottom: 10px;
@@ -18,12 +27,14 @@ header {
 
 h1 {
   font-size: 60px;
-  color: #a34002;
+  color: #f5f3f2;
 }
 
 h2 {
   font-size: 25px;
   margin-top: 20px;
+  color: #f5f3f2;
+  font-family: 'Baloo Tamma 2', cursive;
 }
 
 body {
@@ -33,7 +44,7 @@ body {
 
 .main-img {
   margin: 0 auto;
-  width: 100%;
+  width: 85%;
 }
 
 .button {
@@ -53,15 +64,19 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.image-overlay-text {
+  color: black;
+}
+
 .salmon {
   padding: 20px;
 }
 
 .image-overlay-text {
-  padding: 10px;
+  padding: 5px;
+  padding-top: 10px;
   background-color: #fff;
   opacity: 70%;
-  margin-bottom: 5px;
 }
 
 article.images > img {
@@ -93,6 +108,10 @@ footer {
   padding: 20px;
 }
 
+.locations > li > h3 {
+  font-weight: bold;
+}
+
 /* styles for sales.html*/
 
 .home {
@@ -112,9 +131,11 @@ input {
 }
 
 button.submit {
-  background-color: #a34002;
+  background-color: white;
   border-radius: 5px;
   padding: 5px;
+  color: #a34002;
+  font-weight: bold;
 }
 
 fieldset {
@@ -122,13 +143,18 @@ fieldset {
   width: 80%;
 }
 
+table {
+  background-color: #dbd8d7;
+}
+
 table,
 th,
 td {
-  border: 1px solid black;
   border-collapse: collapse;
+  border: 3px solid black;
   margin: 0 auto;
   padding: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 th {
@@ -140,10 +166,20 @@ th:last-child {
   width: 100px;
 }
 
-tr:not(:first-child):hover {
-  background-color: #a34002;
-}
-
 td:first-child {
   font-weight: bold;
+}
+
+th,
+td:first-child {
+  color: #a34002;
+}
+
+tbody > tr:hover {
+  background-color: #a34002;
+  color: white;
+}
+
+tbody > tr:hover > td:first-child {
+  color: black;
 }
