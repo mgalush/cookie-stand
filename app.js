@@ -55,6 +55,11 @@ window.addEventListener('DOMContentLoaded', () => {
     target.appendChild(newTableRow);
   };
 
+  // delete last row
+  Table.prototype.deleteLastRow = function () {
+    this.body.querySelector('tr:last-of-type').remove();
+  };
+
   function Location(
     location,
     minCustomers,
@@ -101,11 +106,25 @@ window.addEventListener('DOMContentLoaded', () => {
     new Location('Lima', 2, 16, 4.6),
   ];
 
+  // calculate hourly totals for all locations
+  const calculateHourlyTotals = function(locations) {
+    const hourlyTotals = new Array(storeHours.length + 1).fill(0);
+
+    for (let location of locations) {
+      for (let i in location.cookiesSoldPerHour) {
+        const cookiesPerHour = location.cookiesSoldPerHour[i];
+        hourlyTotals[i] += cookiesPerHour;
+      }
+      hourlyTotals[hourlyTotals.length - 1] += location.totalSalesPerDay;
+    }
+
+    return hourlyTotals;
+  };
+
   const cookieSalesTable = new Table('cookie-sales-table');
 
   cookieSalesTable.renderHeader(['', ...storeHours, 'Daily Location Total']);
 
-  const hourlyTotals = new Array(storeHours.length + 1).fill(0);
   // call both functions for each location
   for (let location of locations) {
     location.calculateLocation();
@@ -114,12 +133,45 @@ window.addEventListener('DOMContentLoaded', () => {
       ...location.cookiesSoldPerHour,
       location.totalSalesPerDay,
     ]);
-    for (let i in location.cookiesSoldPerHour) {
-      const cookiesPerHour = location.cookiesSoldPerHour[i];
-      hourlyTotals[i] += cookiesPerHour;
-    }
-    hourlyTotals[hourlyTotals.length - 1] += location.totalSalesPerDay;
   }
 
+  let hourlyTotals = calculateHourlyTotals(locations);
   cookieSalesTable.renderRow(['Total', ...hourlyTotals]);
+
+
+
+  ///////////////////// FORM ////////////////////////////////
+
+  // find target
+  let newLocationForm = document.getElementById('newLocationForm');
+
+  // add event listener
+  newLocationForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    this.location = event.target.newLocation.value;
+    this.minCust = event.target.newMinCust.value;
+    this.maxCust = event.target.newMaxCust.value;
+    this.avgCookiesPerCustomer = event.target.newAvgCookiesPerCustomer.value;
+
+    let location = new Location(this.location, this.minCust, this.maxCust, this.avgCookiesPerCustomer);
+    locations.push(location);
+
+    // delete last row
+    cookieSalesTable.deleteLastRow();
+
+    // create new row 
+    location.calculateLocation();
+    cookieSalesTable.renderRow([
+      location.location,
+      ...location.cookiesSoldPerHour,
+      location.totalSalesPerDay,
+    ]);
+
+    let hourlyTotals = calculateHourlyTotals(locations);
+    cookieSalesTable.renderRow(['Total', ...hourlyTotals]);
+  });
+
+
+
 });
